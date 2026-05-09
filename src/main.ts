@@ -20,6 +20,7 @@ import { mountCaseCards } from './ui/case-cards';
 import { mountTrustRow } from './ui/trust-row';
 import { mountTiers } from './ui/tiers';
 import { mountForm } from './ui/form';
+import { attachCalLinks } from './ui/booking';
 import { buildTimeline } from './timeline';
 import { initLenis } from './lib/lenis';
 import { PROCESS } from './content/process';
@@ -78,6 +79,8 @@ if (tiersRoot) mountTiers(tiersRoot);
 
 const formRoot = document.querySelector<HTMLElement>('.contact-form-mount');
 if (formRoot) mountForm(formRoot, { endpoint: '/api/contact' });
+
+attachCalLinks();
 
 const stepDetail = mountStepDetail();
 const stepsRoot = document.querySelector<HTMLElement>('.process-steps');
