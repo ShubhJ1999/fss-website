@@ -10,16 +10,22 @@ export interface OverlayHandles {
   update: () => void;
 }
 
-export function mountServiceTags(stage: Stage, nodes: ServiceNode[]): OverlayHandles {
+export function mountServiceTags(
+  stage: Stage,
+  nodes: ServiceNode[],
+  onSelect: (service: ServiceNode['service']) => void
+): OverlayHandles {
   const root = document.querySelector<HTMLElement>('.services-grid');
   if (!root) return { tags: [], update: () => {} };
 
   const tags: HTMLElement[] = nodes.map((n) => {
-    const el = document.createElement('div');
-    el.className = 'service-tag';
-    el.textContent = n.service.name;
-    root.appendChild(el);
-    return el;
+    const btn = document.createElement('button');
+    btn.className = 'service-tag';
+    btn.type = 'button';
+    btn.textContent = n.service.name;
+    btn.addEventListener('click', () => onSelect(n.service));
+    root.appendChild(btn);
+    return btn;
   });
 
   const tmp = new THREE.Vector3();

@@ -13,6 +13,7 @@ import { createPipeline } from './objects/pipeline';
 import { createGlobe } from './objects/globe';
 import { createParticleField } from './objects/particles';
 import { mountServiceTags } from './ui/overlays';
+import { mountServiceDetail } from './ui/service-detail';
 import { mountMotionToggle } from './ui/motion-toggle';
 import { buildTimeline } from './timeline';
 import { initLenis } from './lib/lenis';
@@ -47,7 +48,8 @@ stage.scene.add(globe.group);
 stage.scene.add(field.points);
 
 // DOM overlays
-const overlays = mountServiceTags(stage, services.nodes);
+const detail = mountServiceDetail();
+const overlays = mountServiceTags(stage, services.nodes, (svc) => detail.open(svc));
 
 // Master scroll timeline + DOF focus state (driven by timeline, read in render loop)
 const focus = { distance: 0.05 };
