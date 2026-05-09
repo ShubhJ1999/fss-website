@@ -5,3 +5,8 @@ dist
 .vite
 vite.config.ts.timestamp-*
 .superpowers/
+.dev.vars
+.env
+.env.local
+.wrangler/
+functions/tsconfig.tsbuildinfo
