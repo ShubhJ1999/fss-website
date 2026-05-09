@@ -1,0 +1,226 @@
+/* Global styles for the FSS site.
+   Dark navy stage, cyan accents, scene-anchored DOM overlays above the canvas. */
+
+:root {
+  --bg: #050b2e;
+  --bg-2: #030617;
+  --ink: #f4f7ff;
+  --ink-dim: #aab4d4;
+  --cyan: #2ec8ff;
+  --cyan-soft: #6fdcff;
+  --blue: #1f6ee8;
+  --rule: rgba(255, 255, 255, 0.08);
+  --max: 1200px;
+  --pad: clamp(20px, 4vw, 56px);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+
+body {
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE/Edge legacy */
+}
+
+body::-webkit-scrollbar { display: none; }  /* Chrome / Safari */
+
+/* Pinned canvas — rendered behind everything */
+#bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  display: block;
+}
+
+/* Top nav — fully transparent, just floats above the canvas */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px var(--pad);
+  z-index: 20;
+  pointer-events: none;
+}
+
+.nav .brand, .nav nav a { pointer-events: auto; }
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 15px;
+  text-shadow: 0 0 18px rgba(46, 200, 255, 0.35);
+}
+
+.brand-mark { width: 28px; height: 28px; display: block; filter: drop-shadow(0 0 8px rgba(46, 200, 255, 0.45)); }
+
+.nav nav { display: flex; gap: 28px; }
+.nav nav a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+.nav nav a:hover { color: var(--cyan); }
+
+/* Scroll container — each .scene takes a viewport-sized chunk to drive ScrollTrigger */
+#scroll { position: relative; z-index: 10; }
+
+.scene {
+  min-height: 85vh;
+  padding: 0 var(--pad);
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* First scene gets the full first viewport so the hero atom owns it */
+.scene[data-scene="hero"] { min-height: 100vh; }
+
+/* Last scene shrinks to its content + a little breathing room — no empty scroll after the CTA */
+.scene[data-scene="contact"] {
+  min-height: 70vh;
+  padding-top: 110px;        /* clear the fixed nav */
+  padding-bottom: 40px;
+  align-items: flex-start;   /* pin copy to the top, globe sits below */
+}
+
+.scene[data-scene="contact"] .copy {
+  background: radial-gradient(ellipse at center, rgba(5, 11, 46, 0.85) 0%, rgba(5, 11, 46, 0) 75%);
+  padding: 24px 32px;
+}
+
+.copy { max-width: 640px; pointer-events: none; }
+.copy.center { margin: 0 auto; text-align: center; }
+.copy.left { margin-right: auto; }
+.copy.right { margin-left: auto; text-align: right; }
+
+.kicker {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+h1 {
+  font-size: clamp(40px, 7vw, 88px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  margin: 0 0 24px;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: clamp(28px, 4.6vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0 0 20px;
+  font-weight: 600;
+}
+
+p {
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.6;
+  color: var(--ink-dim);
+  margin: 0 0 20px;
+  max-width: 56ch;
+}
+
+.copy.right p { margin-left: auto; }
+.copy.center p { margin-left: auto; margin-right: auto; }
+
+em { color: var(--ink); font-style: normal; border-bottom: 1px dashed var(--cyan); }
+
+.hint {
+  display: inline-block;
+  margin-top: 40px;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  animation: bob 2.4s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50%      { transform: translateY(6px); opacity: 1; }
+}
+
+.cta {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 14px 28px;
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  pointer-events: auto;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.cta:hover { background: var(--cyan); color: var(--bg); transform: translateY(-2px); }
+
+.footnote {
+  display: block;
+  margin-top: 60px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+}
+
+/* Services grid — DOM tags layered over the 3D node cluster */
+.services-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.service-tag {
+  position: absolute;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 6px 10px;
+  border: 1px solid var(--rule);
+  background: rgba(5, 11, 46, 0.55);
+  backdrop-filter: blur(4px);
+  border-radius: 4px;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.4s ease, color 0.3s ease, border-color 0.3s ease;
+  opacity: 0.4;
+  white-space: nowrap;
+}
+
+.service-tag.active {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  opacity: 1;
+}
+
+@media (max-width: 720px) {
+  .copy.right, .copy.left { margin: 0 auto; text-align: left; }
+  .copy.right p { margin-left: 0; }
+  .nav nav { gap: 16px; }
+  .nav nav a { font-size: 11px; }
+}
