@@ -341,14 +341,20 @@ Each phase ships behind no flags. The site is small enough that "ship to preview
 
 **Spec scope note:** This is a single coherent enhancement effort, not multiple independent projects. It produces one phased implementation plan. Phases will be: (1) tech foundation, (2) hero / atom upgrade, (3) constellation + pipeline + globe upgrades, (4) conversion content + pages, (5) form + booking + tiers, (6) SEO / analytics / 404 / launch.
 
-## Open questions for Shubh
+## Decisions on open questions
 
-These need answers before or during implementation. Marking inline so they don't get missed.
+Shubh delegated these. Defaults below — flagged where override is cheap during implementation.
 
-1. **Case studies: which two beyond SwedTeknik?** Options I've heard mentioned in your notes: a UAE retail thing, an ML pipeline. Confirm the exact three with one-line summaries.
-2. **Logos on the wall: which clients?** Need permission for any not-public engagements. If you'd rather keep all client names anonymous, the trust row becomes "30+ deliveries · 4 countries · Founders we work with directly" stat row instead.
-3. **Engagement tiers: do prices appear, or "from $X / scope-dependent"?** I lean toward "Sprint (from $4k) / Build (project) / Embed (monthly)." You decide.
-4. **Calendar: Cal.com or Calendly?** Cal.com is open-source and self-hostable, Calendly is the default. I lean Cal.com.
-5. **Hosting domain: stay on whatever you're using, or switch to Cloudflare Pages now?** Form needs a Function host either way; if you're somewhere else, the function moves to that platform's equivalent.
-6. **Resend account: yours or new?** Need a sender domain verified — needs DNS access on the Fermion domain.
-7. **Analytics: Plausible cloud (paid, ~$9/mo for the cheapest tier) or self-host Umami?** Plausible cloud is the lazy correct answer.
+1. **Case studies: SwedTeknik + 2 placeholders.** Implementation builds the page template, navigation, and styling against placeholder content (`case-two`, `case-three` slugs). Shubh provides the real content during phase 4 by editing `src/content/case-studies.ts` and the corresponding `pages/case-<slug>.html`. SwedTeknik content gets drafted from what I already know (Next.js 15 + Medusa v2, B2C electronics, Sweden) and Shubh edits.
+2. **Logos: stat row, not logos, for v1.** "Delivered to founders across 4 countries" + numeric stats. Avoids client-permission overhead. Real logo wall is a v1.1 follow-up once Shubh confirms which clients are public.
+3. **Engagement tiers: visible anchors.**
+   - Sprint — **from $4,000** (1-2 wk)
+   - Build — **project-scoped** (4-8 wk, typical $15k-$60k range, no fixed price displayed)
+   - Embed — **from $4,500/mo** (retainer)
+   Placeholders Shubh confirms in `src/content/tiers.ts` before launch.
+4. **Calendar: Cal.com.** Open-source, Shubh owns the data, self-host option later. Cloud free tier covers v1.
+5. **Hosting: Cloudflare Pages.** Free tier, edge Functions for the contact form, sub-100ms TTFB, easy custom domain. Migration is `cf-pages-action` GitHub workflow + DNS swap when ready.
+6. **Resend: Shubh creates account + verifies fermion domain.** Marked as a manual prerequisite gate in phase 5 of the plan. Dev/preview can use a sandbox API key + a `noreply@` test address.
+7. **Analytics: Plausible cloud ($9/mo).** Lazy correct answer. Implementation reads `VITE_PLAUSIBLE_DOMAIN` env; empty = no script.
+
+If any of the above are wrong, override during the relevant phase — none are load-bearing on architecture.
