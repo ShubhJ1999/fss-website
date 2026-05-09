@@ -2,6 +2,7 @@
 // Pulls everything together — kept thin; logic lives in scene/timeline/objects modules.
 
 import './styles.css';
+import gsap from 'gsap';
 import { createStage } from './scene/stage';
 import { createPostFx } from './scene/postfx';
 import { detectQuality } from './scene/quality';
@@ -74,3 +75,12 @@ function loop() {
   requestAnimationFrame(loop);
 }
 loop();
+
+// Loading intro: atom assembles, loader fades.
+gsap.set(atom.group.scale, { x: 0, y: 0, z: 0 });
+gsap.set(atom.group.rotation, { y: -1.5 });
+const intro = gsap.timeline({
+  onComplete: () => document.getElementById('loader')?.classList.add('hidden')
+});
+intro.to(atom.group.scale, { x: 1, y: 1, z: 1, duration: 1.2, ease: 'expo.out' }, 0.3);
+intro.to(atom.group.rotation, { y: 0, duration: 1.2, ease: 'expo.out' }, 0.3);
