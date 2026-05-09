@@ -17,7 +17,7 @@ export function mountServiceTags(stage: Stage, nodes: ServiceNode[]): OverlayHan
   const tags: HTMLElement[] = nodes.map((n) => {
     const el = document.createElement('div');
     el.className = 'service-tag';
-    el.textContent = n.name;
+    el.textContent = n.service.name;
     root.appendChild(el);
     return el;
   });

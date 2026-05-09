@@ -2,12 +2,10 @@
 // Each node has a position the camera can fly past, and a label that mounts in DOM.
 
 import * as THREE from 'three';
-
-export type ServiceCluster = 'Build' | 'Run' | 'Grow';
+import { SERVICES, type ServiceCluster, type Service } from '../content/services';
 
 export interface ServiceNode {
-  name: string;
-  cluster: ServiceCluster;
+  service: Service;
   position: THREE.Vector3;
   mesh: THREE.Mesh;
   glow: THREE.Mesh;
@@ -18,23 +16,6 @@ export interface ServiceConstellation {
   nodes: ServiceNode[];
   tick: (t: number) => void;
 }
-
-const SERVICES: { name: string; cluster: ServiceCluster }[] = [
-  { name: 'Custom Software',        cluster: 'Build' },
-  { name: 'UI / UX Design',         cluster: 'Build' },
-  { name: 'CMS Development',        cluster: 'Build' },
-  { name: 'Blockchain Solutions',   cluster: 'Build' },
-  { name: 'Machine Learning',       cluster: 'Build' },
-  { name: 'API Testing',            cluster: 'Run'   },
-  { name: 'Cloud Hosting',          cluster: 'Run'   },
-  { name: 'Cloud Solutions',        cluster: 'Run'   },
-  { name: 'Serverless',             cluster: 'Run'   },
-  { name: 'Remote Hosting',         cluster: 'Run'   },
-  { name: 'Remote Infrastructure',  cluster: 'Run'   },
-  { name: 'Robotic Process Auto.',  cluster: 'Grow'  },
-  { name: 'Marketing',              cluster: 'Grow'  },
-  { name: 'Corporate Training',     cluster: 'Grow'  }
-];
 
 const CLUSTER_OFFSET: Record<ServiceCluster, THREE.Vector3> = {
   Build: new THREE.Vector3(-6, 0, -10),
@@ -100,12 +81,12 @@ export function createServices(): ServiceConstellation {
     group.add(mesh);
     group.add(glow);
 
-    nodes.push({ name: svc.name, cluster: svc.cluster, position: pos.clone(), mesh, glow });
+    nodes.push({ service: svc, position: pos.clone(), mesh, glow });
   });
 
   // Connecting lines within each cluster
   (['Build', 'Run', 'Grow'] as ServiceCluster[]).forEach((cluster) => {
-    const clusterNodes = nodes.filter((n) => n.cluster === cluster);
+    const clusterNodes = nodes.filter((n) => n.service.cluster === cluster);
     const points: THREE.Vector3[] = [];
     for (let i = 0; i < clusterNodes.length - 1; i++) {
       points.push(clusterNodes[i].position, clusterNodes[i + 1].position);
