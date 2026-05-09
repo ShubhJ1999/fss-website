@@ -9,6 +9,7 @@ export interface Stage {
   renderer: THREE.WebGLRenderer;
   clock: THREE.Clock;
   size: () => { w: number; h: number };
+  resize: (w: number, h: number) => void;
 }
 
 export function createStage(canvas: HTMLCanvasElement): Stage {
@@ -63,21 +64,19 @@ export function createStage(canvas: HTMLCanvasElement): Stage {
   fill.position.set(0, 0, 6);
   scene.add(fill);
 
-  const onResize = () => {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
+  const resize = (w: number, h: number) => {
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     renderer.setSize(w, h, false);
   };
-  window.addEventListener('resize', onResize);
 
   return {
     scene,
     camera,
     renderer,
     clock: new THREE.Clock(),
-    size: () => ({ w: window.innerWidth, h: window.innerHeight })
+    size: () => ({ w: window.innerWidth, h: window.innerHeight }),
+    resize
   };
 }
 

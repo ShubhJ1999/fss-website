@@ -4,6 +4,7 @@
 import './styles.css';
 import { createStage } from './scene/stage';
 import { createPostFx } from './scene/postfx';
+import { detectQuality } from './scene/quality';
 import { createAtom } from './objects/atom';
 import { createGrid } from './objects/grid';
 import { createServices } from './objects/services';
@@ -16,9 +17,15 @@ import { buildTimeline } from './timeline';
 const canvas = document.getElementById('bg') as HTMLCanvasElement | null;
 if (!canvas) throw new Error('Missing #bg canvas');
 
+const quality = detectQuality();
 const stage = createStage(canvas);
-const postfx = createPostFx(stage.renderer, stage.scene, stage.camera);
-window.addEventListener('resize', () => postfx.setSize(window.innerWidth, window.innerHeight));
+const postfx = createPostFx(stage.renderer, stage.scene, stage.camera, quality);
+window.addEventListener('resize', () => {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  stage.resize(w, h);
+  postfx.setSize(w, h);
+});
 
 // Build objects
 const atom = createAtom();
