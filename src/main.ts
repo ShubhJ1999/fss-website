@@ -18,6 +18,7 @@ import { mountStepDetail } from './ui/step-detail';
 import { mountMotionToggle } from './ui/motion-toggle';
 import { mountCaseCards } from './ui/case-cards';
 import { mountTrustRow } from './ui/trust-row';
+import { mountTiers } from './ui/tiers';
 import { buildTimeline } from './timeline';
 import { initLenis } from './lib/lenis';
 import { PROCESS } from './content/process';
@@ -70,6 +71,9 @@ if (caseRoot) mountCaseCards(caseRoot);
 
 const trustRoot = document.querySelector<HTMLElement>('.trust-row');
 if (trustRoot) mountTrustRow(trustRoot);
+
+const tiersRoot = document.querySelector<HTMLElement>('.tiers-grid');
+if (tiersRoot) mountTiers(tiersRoot);
 
 const stepDetail = mountStepDetail();
 const stepsRoot = document.querySelector<HTMLElement>('.process-steps');

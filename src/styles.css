@@ -355,3 +355,39 @@ dialog.service-detail .meta li { font-size: 13px; color: var(--ink-dim); padding
 }
 .trust-quote p { font-size: 16px; line-height: 1.5; color: var(--ink); margin: 0 0 10px; }
 .trust-quote cite { font-style: normal; font-size: 12px; color: var(--ink-dim); letter-spacing: 0.06em; }
+
+/* Engagement tiers */
+.scene[data-scene="tiers"] {
+  flex-direction: column;
+  padding-top: 80px; padding-bottom: 80px;
+}
+.scene[data-scene="tiers"] .copy { margin-bottom: 40px; }
+.tiers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px; pointer-events: auto;
+}
+.tier-card {
+  padding: 28px 26px;
+  background: rgba(5,11,46,0.75);
+  border: 1px solid rgba(46,200,255,0.18);
+  border-radius: 8px;
+}
+.tier-card.featured {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 1px rgba(46,200,255,0.4) inset;
+}
+.tier-card h3 { margin: 0 0 8px; font-size: 22px; }
+.tier-card .pitch { color: var(--ink); font-size: 14px; margin: 0 0 18px; }
+.tier-card .duration, .tier-card .pricing {
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--cyan); margin: 0 0 4px;
+}
+.tier-card ul { padding-left: 18px; margin: 14px 0 22px; }
+.tier-card li { font-size: 13px; line-height: 1.6; color: var(--ink-dim); }
+.tier-card .cta {
+  display: inline-block; padding: 10px 20px;
+  border: 1px solid var(--cyan); color: var(--cyan);
+  text-decoration: none; border-radius: 999px; font-size: 13px;
+}
+.tier-card .cta:hover { background: var(--cyan); color: var(--bg); }
