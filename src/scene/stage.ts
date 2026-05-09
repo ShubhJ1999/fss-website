@@ -2,6 +2,7 @@
 // One persistent scene reused across all scroll-driven scene-regions.
 
 import * as THREE from 'three';
+import type { Quality } from './quality';
 
 export interface Stage {
   scene: THREE.Scene;
@@ -12,7 +13,7 @@ export interface Stage {
   resize: (w: number, h: number) => void;
 }
 
-export function createStage(canvas: HTMLCanvasElement): Stage {
+export function createStage(canvas: HTMLCanvasElement, quality: Quality): Stage {
   // Probe WebGL support up front so we can show a clean fallback instead of crashing
   const probe = document.createElement('canvas').getContext('webgl2')
     || document.createElement('canvas').getContext('webgl');
@@ -33,7 +34,7 @@ export function createStage(canvas: HTMLCanvasElement): Stage {
     showWebGLFallback();
     throw err;
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, quality.dprCap));
   renderer.setSize(window.innerWidth, window.innerHeight, false);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;

@@ -19,7 +19,7 @@ const canvas = document.getElementById('bg') as HTMLCanvasElement | null;
 if (!canvas) throw new Error('Missing #bg canvas');
 
 const quality = detectQuality();
-const stage = createStage(canvas);
+const stage = createStage(canvas, quality);
 const postfx = createPostFx(stage.renderer, stage.scene, stage.camera, quality);
 window.addEventListener('resize', () => {
   const w = window.innerWidth;
@@ -34,7 +34,7 @@ const grid = createGrid();
 const services = createServices();
 const pipeline = createPipeline();
 const globe = createGlobe();
-const field = createParticleField();
+const field = createParticleField(quality.particleCount);
 
 // Stage assembly
 stage.scene.add(atom.group);
