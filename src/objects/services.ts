@@ -2,12 +2,14 @@
 // Each node has a position the camera can fly past, and a label that mounts in DOM.
 
 import * as THREE from 'three';
+import { BatchedMesh } from 'three';
 import { SERVICES, type ServiceCluster, type Service } from '../content/services';
 
 export interface ServiceNode {
   service: Service;
   position: THREE.Vector3;
-  mesh: THREE.Mesh;
+  outerInstId: number;
+  innerInstId: number;
   glow: THREE.Mesh;
 }
 
@@ -30,6 +32,32 @@ export function createServices(): ServiceConstellation {
   // Stable per-cluster index so layout is deterministic
   const perCluster: Record<ServiceCluster, number> = { Build: 0, Run: 0, Grow: 0 };
 
+  // Shared geometry / materials, one batched draw call per layer (outer wireframe + inner solid)
+  const SHARED_GEO_OUTER = new THREE.IcosahedronGeometry(0.4, 0);
+  const SHARED_GEO_INNER = new THREE.IcosahedronGeometry(0.32, 0);
+
+  const outerMat = new THREE.MeshBasicMaterial({
+    color: 0x2ec8ff, wireframe: true, transparent: true, opacity: 0.55
+  });
+  const innerMat = new THREE.MeshStandardMaterial({
+    color: 0x0a1450, emissive: 0x1f6ee8, emissiveIntensity: 0.4,
+    roughness: 0.4, metalness: 0.3
+  });
+
+  const totalInstances = SERVICES.length;
+  const totalVertsOuter = SERVICES.length * SHARED_GEO_OUTER.attributes.position.count;
+  const totalIdxOuter = SERVICES.length * (SHARED_GEO_OUTER.index?.count ?? 0);
+  const totalVertsInner = SERVICES.length * SHARED_GEO_INNER.attributes.position.count;
+  const totalIdxInner = SERVICES.length * (SHARED_GEO_INNER.index?.count ?? 0);
+
+  const batchedOuter = new BatchedMesh(totalInstances, totalVertsOuter, totalIdxOuter, outerMat);
+  const batchedInner = new BatchedMesh(totalInstances, totalVertsInner, totalIdxInner, innerMat);
+
+  const outerGeoId = batchedOuter.addGeometry(SHARED_GEO_OUTER);
+  const innerGeoId = batchedInner.addGeometry(SHARED_GEO_INNER);
+
+  const tmpMatrix = new THREE.Matrix4();
+
   SERVICES.forEach((svc) => {
     const offset = CLUSTER_OFFSET[svc.cluster];
     const idx = perCluster[svc.cluster]++;
@@ -43,30 +71,13 @@ export function createServices(): ServiceConstellation {
       offset.z + (Math.sin(angle * 1.3) - 0.2) * 1.4
     );
 
-    // Wireframe icosahedron — feels structural, not generic
-    const geo = new THREE.IcosahedronGeometry(0.4, 0);
-    const mat = new THREE.MeshBasicMaterial({
-      color: 0x2ec8ff,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.55
-    });
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.copy(pos);
+    tmpMatrix.makeTranslation(pos.x, pos.y, pos.z);
+    const outerInstId = batchedOuter.addInstance(outerGeoId);
+    batchedOuter.setMatrixAt(outerInstId, tmpMatrix);
+    const innerInstId = batchedInner.addInstance(innerGeoId);
+    batchedInner.setMatrixAt(innerInstId, tmpMatrix);
 
-    // Inner solid for depth
-    const solidGeo = new THREE.IcosahedronGeometry(0.32, 0);
-    const solidMat = new THREE.MeshStandardMaterial({
-      color: 0x0a1450,
-      emissive: 0x1f6ee8,
-      emissiveIntensity: 0.4,
-      roughness: 0.4,
-      metalness: 0.3
-    });
-    const solid = new THREE.Mesh(solidGeo, solidMat);
-    mesh.add(solid);
-
-    // Soft additive glow
+    // Soft additive glow stays an individual mesh (additive blending doesn't batch cleanly)
     const glowGeo = new THREE.SphereGeometry(0.7, 12, 12);
     const glowMat = new THREE.MeshBasicMaterial({
       color: 0x6fdcff,
@@ -77,12 +88,13 @@ export function createServices(): ServiceConstellation {
     });
     const glow = new THREE.Mesh(glowGeo, glowMat);
     glow.position.copy(pos);
-
-    group.add(mesh);
     group.add(glow);
 
-    nodes.push({ service: svc, position: pos.clone(), mesh, glow });
+    nodes.push({ service: svc, position: pos.clone(), outerInstId, innerInstId, glow });
   });
+
+  group.add(batchedOuter);
+  group.add(batchedInner);
 
   // Connecting lines within each cluster
   (['Build', 'Run', 'Grow'] as ServiceCluster[]).forEach((cluster) => {
@@ -102,8 +114,10 @@ export function createServices(): ServiceConstellation {
 
   const tick = (t: number) => {
     nodes.forEach((n, i) => {
-      n.mesh.rotation.x = t * 0.3 + i;
-      n.mesh.rotation.y = t * 0.4 + i * 0.2;
+      tmpMatrix.makeRotationFromEuler(new THREE.Euler(t * 0.3 + i, t * 0.4 + i * 0.2, 0));
+      tmpMatrix.setPosition(n.position);
+      batchedOuter.setMatrixAt(n.outerInstId, tmpMatrix);
+      batchedInner.setMatrixAt(n.innerInstId, tmpMatrix);
       const breathe = 1 + Math.sin(t * 1.2 + i) * 0.06;
       n.glow.scale.setScalar(breathe);
     });
