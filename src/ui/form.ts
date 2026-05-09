@@ -2,6 +2,7 @@
 // Built with safe-DOM helpers; no innerHTML on any user-derived path.
 
 import { el, clear } from '../lib/dom';
+import { track } from '../lib/analytics';
 
 export interface FormFields {
   name: string;
@@ -92,10 +93,12 @@ export function mountForm(root: HTMLElement, opts: FormOpts): void {
       if (!res.ok) throw new Error(`Server ${res.status}`);
       status.textContent = 'Sent. We\'ll respond within a working day.';
       status.className = 'form-status ok';
+      track('form_submit', { result: 'success' });
       form.reset();
     } catch {
       status.textContent = 'Couldn\'t send — try again or email support@fermionsoftwaresolutions.com directly.';
       status.className = 'form-status err';
+      track('form_submit', { result: 'error' });
     }
   });
 }

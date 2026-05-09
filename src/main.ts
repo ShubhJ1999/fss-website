@@ -21,6 +21,7 @@ import { mountTrustRow } from './ui/trust-row';
 import { mountTiers } from './ui/tiers';
 import { mountForm } from './ui/form';
 import { attachCalLinks } from './ui/booking';
+import { initAnalytics } from './lib/analytics';
 import { buildTimeline } from './timeline';
 import { initLenis } from './lib/lenis';
 import { PROCESS } from './content/process';
@@ -81,6 +82,7 @@ const formRoot = document.querySelector<HTMLElement>('.contact-form-mount');
 if (formRoot) mountForm(formRoot, { endpoint: '/api/contact' });
 
 attachCalLinks();
+initAnalytics();
 
 const stepDetail = mountStepDetail();
 const stepsRoot = document.querySelector<HTMLElement>('.process-steps');

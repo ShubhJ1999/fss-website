@@ -1,11 +1,14 @@
 // Cal.com inline embed loader. Loads only on first click — keeps initial bundle clean.
 // Looks for data-cal-link attributes on any element and binds the click.
 
+import { track } from '../lib/analytics';
+
 let calLoaded = false;
 
 export function attachCalLinks(): void {
   document.querySelectorAll<HTMLElement>('[data-cal-link]').forEach((node) => {
     node.addEventListener('click', () => {
+      track('cta_book_click');
       if (!calLoaded) { loadCal(); calLoaded = true; }
       const link = node.dataset.calLink ?? '';
       const w = window as unknown as { Cal?: (...args: unknown[]) => void };

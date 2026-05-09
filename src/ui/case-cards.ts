@@ -1,14 +1,15 @@
 // Case study card grid for the index. Links to standalone case pages.
-// (Analytics tracking will land in Task 28.)
 
 import { CASE_STUDIES } from '../content/case-studies';
 import { el } from '../lib/dom';
+import { track } from '../lib/analytics';
 
 export function mountCaseCards(root: HTMLElement): void {
   for (const c of CASE_STUDIES) {
     const a = el('a', {
       class: 'case-card',
-      attrs: { href: `./pages/case-${c.slug}.html` }
+      attrs: { href: `./pages/case-${c.slug}.html` },
+      on: { click: () => track('case_study_open', { slug: c.slug }) }
     });
     a.appendChild(el('span', { class: 'kicker', text: c.client }));
     a.appendChild(el('h3', { text: c.tagline }));

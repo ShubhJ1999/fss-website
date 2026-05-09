@@ -3,6 +3,7 @@
 
 import type { Service } from '../content/services';
 import { el, tree, clear } from '../lib/dom';
+import { track } from '../lib/analytics';
 
 export interface ServiceDetailHandle {
   open: (service: Service) => void;
@@ -51,7 +52,7 @@ export function mountServiceDetail(): ServiceDetailHandle {
   };
 
   return {
-    open: (service) => { render(service); dialog.showModal(); },
+    open: (service) => { render(service); dialog.showModal(); track('service_detail_open', { slug: service.slug }); },
     close
   };
 }
