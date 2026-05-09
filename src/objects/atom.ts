@@ -2,6 +2,7 @@
 // Stand-in for the "fermion" — single subatomic particle, not multiple.
 
 import * as THREE from 'three';
+import { createFermionMaterial } from './atom-shader/material';
 
 export interface Atom {
   group: THREE.Group;
@@ -11,16 +12,10 @@ export interface Atom {
 export function createAtom(): Atom {
   const group = new THREE.Group();
 
-  // Core
-  const coreGeo = new THREE.IcosahedronGeometry(0.55, 3);
-  const coreMat = new THREE.MeshStandardMaterial({
-    color: 0x2ec8ff,
-    emissive: 0x1f6ee8,
-    emissiveIntensity: 1.4,
-    roughness: 0.25,
-    metalness: 0.6
-  });
-  const core = new THREE.Mesh(coreGeo, coreMat);
+  // Core — driven by the fermion GLSL shader (see atom-shader/material.ts).
+  const fermion = createFermionMaterial();
+  const coreGeo = new THREE.SphereGeometry(0.55, 64, 64);
+  const core = new THREE.Mesh(coreGeo, fermion.material);
   group.add(core);
 
   // Inner glow shell (slightly larger, transparent)
@@ -72,8 +67,8 @@ export function createAtom(): Atom {
   });
 
   const tick = (t: number) => {
-    core.rotation.y = t * 0.3;
-    core.rotation.x = t * 0.12;
+    fermion.tick(t);
+    core.rotation.y = t * 0.15;
     rings.forEach((r) => { r.rotation.z = t * (r.userData.speed as number); });
     orbiters.forEach((o) => {
       const a = t * o.speed + o.phase;
