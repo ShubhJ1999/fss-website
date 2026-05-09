@@ -5,16 +5,31 @@ export type MotionMode = 'full' | 'reduced';
 
 const STORAGE_KEY = 'fss:motion-mode';
 const listeners = new Set<(mode: MotionMode) => void>();
+let cached: MotionMode | null = null;
+
+function readManual(): MotionMode | null {
+  try {
+    const v = localStorage.getItem(STORAGE_KEY);
+    return v === 'full' || v === 'reduced' ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+function readOs(): MotionMode {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'reduced' : 'full';
+}
 
 export function getMotionMode(): MotionMode {
-  const manual = localStorage.getItem(STORAGE_KEY) as MotionMode | null;
-  if (manual === 'full' || manual === 'reduced') return manual;
-  const os = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  return os ? 'reduced' : 'full';
+  if (cached) return cached;
+  const manual = readManual();
+  return manual ?? readOs();
 }
 
 export function setMotionMode(mode: MotionMode): void {
-  localStorage.setItem(STORAGE_KEY, mode);
+  if (getMotionMode() === mode) return;
+  cached = mode;
+  try { localStorage.setItem(STORAGE_KEY, mode); } catch { /* in-memory only */ }
   listeners.forEach((l) => l(mode));
 }
 
