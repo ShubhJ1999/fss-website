@@ -14,9 +14,12 @@ import { createGlobe } from './objects/globe';
 import { createParticleField } from './objects/particles';
 import { mountServiceTags } from './ui/overlays';
 import { mountServiceDetail } from './ui/service-detail';
+import { mountStepDetail } from './ui/step-detail';
 import { mountMotionToggle } from './ui/motion-toggle';
 import { buildTimeline } from './timeline';
 import { initLenis } from './lib/lenis';
+import { PROCESS } from './content/process';
+import { el } from './lib/dom';
 
 const canvas = document.getElementById('bg') as HTMLCanvasElement | null;
 if (!canvas) throw new Error('Missing #bg canvas');
@@ -59,6 +62,20 @@ initLenis();
 
 const motionRoot = document.querySelector<HTMLElement>('.motion-toggle-mount');
 if (motionRoot) mountMotionToggle(motionRoot);
+
+const stepDetail = mountStepDetail();
+const stepsRoot = document.querySelector<HTMLElement>('.process-steps');
+if (stepsRoot) {
+  PROCESS.forEach((step) => {
+    const btn = el('button', {
+      class: 'step-pill',
+      text: step.name,
+      attrs: { type: 'button' },
+      on: { click: () => stepDetail.open(step) }
+    });
+    stepsRoot.appendChild(btn);
+  });
+}
 
 // Render loop
 function loop() {
