@@ -1,7 +1,9 @@
-// Wireframe globe with arcs connecting client locations.
+// Wireframe globe with continent outlines and animated arc pulses.
 // Used for the "reach" scene before the camera lifts to the contact landing.
 
 import * as THREE from 'three';
+import * as topojson from 'topojson-client';
+import type { MultiLineString } from 'geojson';
 
 export interface Globe {
   group: THREE.Group;
@@ -42,6 +44,28 @@ export function createGlobe(): Globe {
   });
   group.add(new THREE.Mesh(sphereGeo, sphereMat));
 
+  // Continent outlines fetched at runtime; rendered just above the sphere.
+  fetch('./continents.json')
+    .then((r0) => r0.json())
+    .then((world) => {
+      const land = topojson.mesh(world, world.objects.countries) as MultiLineString;
+      const positions: number[] = [];
+      for (const ring of land.coordinates) {
+        for (let i = 0; i < ring.length - 1; i++) {
+          const a = latLngToVec3(ring[i][1], ring[i][0], r * 1.002);
+          const b = latLngToVec3(ring[i + 1][1], ring[i + 1][0], r * 1.002);
+          positions.push(a.x, a.y, a.z, b.x, b.y, b.z);
+        }
+      }
+      const lineGeo = new THREE.BufferGeometry();
+      lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+      const lineMat = new THREE.LineBasicMaterial({
+        color: 0x6fdcff, transparent: true, opacity: 0.55
+      });
+      group.add(new THREE.LineSegments(lineGeo, lineMat));
+    })
+    .catch((e) => console.warn('continents fetch failed', e));
+
   // Solid inner core (very dark) so wireframe reads
   const innerGeo = new THREE.SphereGeometry(r * 0.99, 32, 24);
   const innerMat = new THREE.MeshBasicMaterial({ color: 0x030617 });
@@ -57,19 +81,25 @@ export function createGlobe(): Globe {
     group.add(d);
   });
 
-  // Arcs between consecutive locations
+  // Arcs between consecutive locations, each with a traveling pulse.
+  const pulses: { mesh: THREE.Mesh; curve: THREE.QuadraticBezierCurve3; offset: number }[] = [];
+
   for (let i = 0; i < dotPositions.length; i++) {
     const a = dotPositions[i];
     const b = dotPositions[(i + 1) % dotPositions.length];
     const mid = a.clone().add(b).multiplyScalar(0.5).normalize().multiplyScalar(r * 1.45);
     const curve = new THREE.QuadraticBezierCurve3(a, mid, b);
-    const arcGeo = new THREE.TubeGeometry(curve, 40, 0.015, 8, false);
+    const arcGeo = new THREE.TubeGeometry(curve, 40, 0.012, 8, false);
     const arcMat = new THREE.MeshBasicMaterial({
-      color: 0x2ec8ff,
-      transparent: true,
-      opacity: 0.55
+      color: 0x2ec8ff, transparent: true, opacity: 0.35
     });
     group.add(new THREE.Mesh(arcGeo, arcMat));
+
+    const pulseGeo = new THREE.SphereGeometry(0.07, 12, 12);
+    const pulseMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const pulse = new THREE.Mesh(pulseGeo, pulseMat);
+    group.add(pulse);
+    pulses.push({ mesh: pulse, curve, offset: i / dotPositions.length });
   }
 
   // Globe sits far below so the camera can descend onto it
@@ -77,6 +107,10 @@ export function createGlobe(): Globe {
 
   const tick = (t: number) => {
     group.rotation.y = t * 0.08;
+    pulses.forEach((p) => {
+      const u = ((t * 0.12) + p.offset) % 1;
+      p.mesh.position.copy(p.curve.getPointAt(u));
+    });
   };
 
   return { group, tick };
