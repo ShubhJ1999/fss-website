@@ -336,3 +336,22 @@ dialog.service-detail .meta li { font-size: 13px; color: var(--ink-dim); padding
   color: var(--cyan); text-transform: uppercase;
 }
 
+
+/* Trust row — stat strip + testimonial pull-quote */
+.trust-row { margin-top: 24px; }
+.trust-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px; margin-bottom: 24px;
+}
+.trust-stats > div { padding: 12px 16px; border-left: 2px solid var(--cyan); }
+.trust-stats strong { display: block; font-size: 22px; font-weight: 700; color: var(--ink); }
+.trust-stats span {
+  font-size: 11px; letter-spacing: 0.16em;
+  color: var(--ink-dim); text-transform: uppercase;
+}
+.trust-quote {
+  margin: 0; padding: 18px 22px;
+  background: rgba(46,200,255,0.05); border-left: 2px solid var(--cyan);
+}
+.trust-quote p { font-size: 16px; line-height: 1.5; color: var(--ink); margin: 0 0 10px; }
+.trust-quote cite { font-style: normal; font-size: 12px; color: var(--ink-dim); letter-spacing: 0.06em; }
