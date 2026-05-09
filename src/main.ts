@@ -16,6 +16,7 @@ import { mountServiceTags } from './ui/overlays';
 import { mountServiceDetail } from './ui/service-detail';
 import { mountStepDetail } from './ui/step-detail';
 import { mountMotionToggle } from './ui/motion-toggle';
+import { mountCaseCards } from './ui/case-cards';
 import { buildTimeline } from './timeline';
 import { initLenis } from './lib/lenis';
 import { PROCESS } from './content/process';
@@ -62,6 +63,9 @@ initLenis();
 
 const motionRoot = document.querySelector<HTMLElement>('.motion-toggle-mount');
 if (motionRoot) mountMotionToggle(motionRoot);
+
+const caseRoot = document.querySelector<HTMLElement>('.case-grid');
+if (caseRoot) mountCaseCards(caseRoot);
 
 const stepDetail = mountStepDetail();
 const stepsRoot = document.querySelector<HTMLElement>('.process-steps');
