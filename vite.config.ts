@@ -1,11 +1,24 @@
 // Vite config for the Fermion Software Solutions site.
-// Single-page app, static assets in /public, GLSL shader imports via vite-plugin-glsl.
+// Multi-page setup: index + case studies + 404. GLSL plugin for shader imports.
 import { defineConfig } from 'vite';
+import { resolve } from 'path';
 import glsl from 'vite-plugin-glsl';
 
 export default defineConfig({
   base: './',
   plugins: [glsl()],
   server: { port: 5173, open: false },
-  build: { target: 'es2022', sourcemap: true }
+  build: {
+    target: 'es2022',
+    sourcemap: true,
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        caseSwedteknik: resolve(__dirname, 'pages/case-swedteknik.html'),
+        caseTwo: resolve(__dirname, 'pages/case-two.html'),
+        caseThree: resolve(__dirname, 'pages/case-three.html'),
+        notFound: resolve(__dirname, '404.html')
+      }
+    }
+  }
 });
