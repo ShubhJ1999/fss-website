@@ -1,16 +1,18 @@
 // Post-processing composer using pmndrs/postprocessing.
-// One merged fullscreen pass; bloom now, DOF + chromatic in later tasks.
+// One merged fullscreen stack: bloom + scroll-driven depth-of-field (gated by quality tier).
 
 import * as THREE from 'three';
 import {
   EffectComposer, RenderPass, EffectPass,
-  BloomEffect, BlendFunction, KernelSize
+  BloomEffect, DepthOfFieldEffect,
+  BlendFunction, KernelSize
 } from 'postprocessing';
 import type { Quality } from './quality';
 
 export interface PostFx {
   composer: EffectComposer;
   setSize: (w: number, h: number) => void;
+  dof: DepthOfFieldEffect | null;
 }
 
 export function createPostFx(
@@ -33,5 +35,19 @@ export function createPostFx(
     composer.addPass(new EffectPass(camera, bloom));
   }
 
-  return { composer, setSize: (w, h) => composer.setSize(w, h) };
+  let dof: DepthOfFieldEffect | null = null;
+  if (quality.dofEnabled) {
+    dof = new DepthOfFieldEffect(camera, {
+      focusDistance: 0.0,
+      focalLength: 0.05,
+      bokehScale: 2.0
+    });
+    composer.addPass(new EffectPass(camera, dof));
+  }
+
+  return {
+    composer,
+    setSize: (w, h) => composer.setSize(w, h),
+    dof
+  };
 }

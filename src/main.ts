@@ -48,8 +48,9 @@ stage.scene.add(field.points);
 // DOM overlays
 const overlays = mountServiceTags(stage, services.nodes);
 
-// Master scroll timeline
-buildTimeline({ stage, atom, grid, services, pipeline, globe });
+// Master scroll timeline + DOF focus state (driven by timeline, read in render loop)
+const focus = { distance: 0.05 };
+buildTimeline({ stage, atom, grid, services, pipeline, globe, focus });
 
 initLenis();
 
@@ -66,6 +67,9 @@ function loop() {
   globe.tick(t);
   field.tick(t);
   overlays.update();
+  if (postfx.dof) {
+    postfx.dof.cocMaterial.uniforms.focusDistance.value = focus.distance;
+  }
   postfx.composer.render();
   requestAnimationFrame(loop);
 }
