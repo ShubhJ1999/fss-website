@@ -13,6 +13,7 @@ import { createGlobe } from './objects/globe';
 import { createParticleField } from './objects/particles';
 import { mountServiceTags } from './ui/overlays';
 import { buildTimeline } from './timeline';
+import { initLenis } from './lib/lenis';
 
 const canvas = document.getElementById('bg') as HTMLCanvasElement | null;
 if (!canvas) throw new Error('Missing #bg canvas');
@@ -48,6 +49,8 @@ const overlays = mountServiceTags(stage, services.nodes);
 
 // Master scroll timeline
 buildTimeline({ stage, atom, grid, services, pipeline, globe });
+
+initLenis();
 
 // Render loop
 function loop() {
