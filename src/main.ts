@@ -12,6 +12,7 @@ import { createPipeline } from './objects/pipeline';
 import { createGlobe } from './objects/globe';
 import { createParticleField } from './objects/particles';
 import { mountServiceTags } from './ui/overlays';
+import { mountMotionToggle } from './ui/motion-toggle';
 import { buildTimeline } from './timeline';
 import { initLenis } from './lib/lenis';
 
@@ -51,6 +52,9 @@ const overlays = mountServiceTags(stage, services.nodes);
 buildTimeline({ stage, atom, grid, services, pipeline, globe });
 
 initLenis();
+
+const motionRoot = document.querySelector<HTMLElement>('.motion-toggle-mount');
+if (motionRoot) mountMotionToggle(motionRoot);
 
 // Render loop
 function loop() {

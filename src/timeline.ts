@@ -10,6 +10,7 @@ import type { Grid } from './objects/grid';
 import type { ServiceConstellation } from './objects/services';
 import type { Pipeline } from './objects/pipeline';
 import type { Globe } from './objects/globe';
+import { getMotionMode } from './scene/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,7 +23,7 @@ export interface SceneRefs {
   globe: Globe;
 }
 
-export function buildTimeline(refs: SceneRefs) {
+export function buildTimeline(refs: SceneRefs): gsap.core.Timeline | null {
   const { stage, atom, grid, services, pipeline, globe } = refs;
   const cam = stage.camera;
   const lookAt = new THREE.Vector3(0, 0, 0);
@@ -38,6 +39,16 @@ export function buildTimeline(refs: SceneRefs) {
   services.group.visible = false;
   pipeline.group.visible = false;
   globe.group.visible = false;
+
+  if (getMotionMode() === 'reduced') {
+    gsap.set(cam.position, { x: 0, y: 0, z: 8 });
+    applyLookAt();
+    grid.group.visible = true;
+    services.group.visible = true;
+    pipeline.group.visible = true;
+    globe.group.visible = true;
+    return null;
+  }
 
   const tl = gsap.timeline({
     scrollTrigger: {
