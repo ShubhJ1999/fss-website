@@ -41,3 +41,13 @@ section ul { padding-left: 20px; }
 
 .back { display: inline-block; margin-top: 64px; color: var(--cyan); text-decoration: none; letter-spacing: 0.04em; }
 .back:hover { text-decoration: underline; }
+
+#bg-404 { position: fixed; inset: 0; z-index: 0; display: block; }
+main.not-found {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 0 24px;
+}
+main.not-found h1 { margin: 12px 0 16px; }
+main.not-found p { color: var(--ink-dim); max-width: 48ch; text-align: center; }
