@@ -391,3 +391,37 @@ dialog.service-detail .meta li { font-size: 13px; color: var(--ink-dim); padding
   text-decoration: none; border-radius: 999px; font-size: 13px;
 }
 .tier-card .cta:hover { background: var(--cyan); color: var(--bg); }
+
+/* Contact form + booking */
+.booking-row { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 12px 0 24px; }
+.cta-book { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); cursor: pointer; }
+.cta-book:hover { background: var(--cyan); color: var(--bg); }
+.contact-form { display: grid; gap: 14px; max-width: 520px; margin: 24px auto 16px; pointer-events: auto; }
+.contact-form label { display: grid; gap: 6px; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-dim); text-align: left; }
+.contact-form input, .contact-form textarea {
+  background: rgba(5,11,46,0.75);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  padding: 10px 14px;
+  font: inherit; font-size: 15px;
+  letter-spacing: normal; text-transform: none;
+  border-radius: 6px;
+  transition: border-color 0.2s;
+}
+.contact-form input:focus, .contact-form textarea:focus { border-color: var(--cyan); outline: none; }
+.contact-form label.error input, .contact-form label.error textarea { border-color: #ff7b7b; }
+.contact-form button {
+  padding: 12px 24px;
+  background: var(--cyan); color: var(--bg);
+  border: none; border-radius: 999px;
+  font-weight: 700; letter-spacing: 0.06em; cursor: pointer;
+  justify-self: start;
+}
+.contact-form button:hover { transform: translateY(-1px); }
+.form-status { font-size: 13px; min-height: 18px; }
+.form-status.err { color: #ff9b9b; }
+.form-status.ok { color: var(--cyan); }
+.contact-or {
+  font-size: 12px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ink-dim); margin-top: 8px;
+}
