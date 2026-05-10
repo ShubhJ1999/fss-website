@@ -27,7 +27,8 @@ export function createStage(canvas: HTMLCanvasElement, quality: Quality): Stage 
     renderer = new THREE.WebGLRenderer({
       canvas,
       antialias: true,
-      alpha: false,
+      alpha: true,
+      premultipliedAlpha: false,
       powerPreference: 'high-performance'
     });
   } catch (err) {
@@ -36,13 +37,15 @@ export function createStage(canvas: HTMLCanvasElement, quality: Quality): Stage 
   }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, quality.dprCap));
   renderer.setSize(window.innerWidth, window.innerHeight, false);
+  renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x050b2e);
-  scene.fog = new THREE.FogExp2(0x050b2e, 0.018);
+  // No background or fog — let the page bg show through. The atom + glow
+  // are bright enough to read against the navy without a scene clear.
+  scene.background = null;
 
   const camera = new THREE.PerspectiveCamera(
     55,
