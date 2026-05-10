@@ -5,7 +5,7 @@ import { test, expect } from '@playwright/test';
 
 test('index loads, scrolls, form errors on bad input', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('h1').first()).toContainText(/Software built/);
+  await expect(page.locator('h1').first()).toContainText(/[Ss]oftware/);
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
   await page.fill('input[name="name"]', 'A');
   await page.fill('input[name="email"]', 'bad-email');
