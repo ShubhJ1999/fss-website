@@ -8,7 +8,7 @@ export function mountCaseCards(root: HTMLElement): void {
   for (const c of CASE_STUDIES) {
     const a = el('a', {
       class: 'case-card',
-      attrs: { href: `./pages/case-${c.slug}.html` },
+      attrs: { href: `./pages/${c.slug}.html` },
       on: { click: () => track('case_study_open', { slug: c.slug }) }
     });
     a.appendChild(el('span', { class: 'kicker', text: c.client }));

@@ -13,7 +13,7 @@ const today = new Date().toISOString().slice(0, 10);
 
 const urls = [
   { loc: `${SITE}/`, priority: '1.0' },
-  ...CASE_STUDIES.map((c) => ({ loc: `${SITE}/pages/case-${c.slug}.html`, priority: '0.7' }))
+  ...CASE_STUDIES.map((c) => ({ loc: `${SITE}/pages/${c.slug}.html`, priority: '0.7' }))
 ];
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
