@@ -1,5 +1,5 @@
-// Process step content used by the pipeline detail panels.
-// Mirrors the five-stage pipeline copy: Discovery → Design → Build → Ship → Support.
+// Process steps used by the editorial "How we work" list.
+// Same content the previous 3D pipeline carried; rendered as a numbered editorial list now.
 
 export interface ProcessStep {
   slug: string;

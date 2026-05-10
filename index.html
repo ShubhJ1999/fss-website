@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="./fss-logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Custom software, ML, automation, and cloud systems built around your business — by a small team that ships in weeks, not quarters." />
-    <title>Fermion Software Solutions — Software built around your business</title>
+    <meta name="description" content="Custom software, built around your business — by a small team that ships in weeks, not quarters. Discovery to deployment in under 8." />
+    <title>Fermion Software Solutions — Custom software, shipped fast.</title>
 
     <meta property="og:title" content="Fermion Software Solutions" />
-    <meta property="og:description" content="Software built around your business. Custom development, ML, RPA, cloud." />
+    <meta property="og:description" content="Custom software for small teams in commerce, fintech, and SaaS. Shipped in weeks, not quarters." />
     <meta property="og:image" content="https://fermionsoftwaresolutions.com/og.png" />
     <meta property="og:url" content="https://fermionsoftwaresolutions.com" />
     <meta property="og:type" content="website" />
@@ -17,11 +17,6 @@
     <script type="application/ld+json" id="org-ld"></script>
   </head>
   <body>
-    <canvas id="bg"></canvas>
-    <div id="loader" aria-hidden="true">
-      <div class="loader-pulse"></div>
-    </div>
-
     <header class="nav">
       <a class="brand" href="#top" aria-label="Fermion Software Solutions">
         <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
@@ -39,92 +34,108 @@
         <span>Fermion</span>
       </a>
       <nav>
+        <a href="#work">Work</a>
         <a href="#services">Services</a>
-        <a href="#process">Process</a>
+        <a href="#about">About</a>
         <a href="#contact">Contact</a>
       </nav>
     </header>
 
-    <main id="scroll">
-      <section class="scene" data-scene="hero" id="top">
-        <div class="copy center">
-          <h1>Software built<br/>around your business.</h1>
-          <p>Fermion Software Solutions designs and ships custom software, ML, automation, and cloud systems for teams that need real outcomes — not slideware.</p>
-          <span class="hint">scroll</span>
+    <main id="top">
+      <!-- Hero — atom signature + headline -->
+      <section class="hero">
+        <canvas id="bg"></canvas>
+        <div class="hero-copy">
+          <h1>Custom software, built around your business.</h1>
+          <p class="lede">A senior engineer paired directly with you. No layers, no handoffs. Discovery to deployment in 6 — 8 weeks for most projects.</p>
+          <div class="hero-cta">
+            <a class="cta primary" href="#contact">Start a project</a>
+            <a class="cta ghost" href="#work">See recent work</a>
+          </div>
         </div>
       </section>
 
-      <section class="scene" data-scene="intro">
-        <div class="copy left">
-          <span class="kicker">01 — Who we are</span>
-          <h2>A small team that builds the way you'd build it yourself — if you had the time.</h2>
-          <p>We pair senior engineers directly with founders and operators. No layers, no handoffs, no theatre. Discovery to deployment in weeks, not quarters.</p>
-        </div>
-      </section>
-
-      <section class="scene" data-scene="services" id="services">
-        <div class="copy right">
-          <span class="kicker">02 — What we build</span>
-          <h2>Three things, fourteen disciplines.</h2>
-          <p>Every engagement maps to one of three outcomes: <em>build</em> the system, <em>run</em> it reliably, or <em>grow</em> what it reaches.</p>
-        </div>
-        <div class="services-grid" aria-hidden="false"></div>
-      </section>
-
-      <section class="scene" data-scene="process" id="process">
-        <div class="copy left">
-          <span class="kicker">03 — How we work</span>
-          <h2>Discovery → Design → Build → Ship → Support.</h2>
-          <p>One pipeline, no surprises. Weekly demos, transparent estimates, source you own from day one.</p>
-          <div class="process-steps"></div>
-        </div>
-      </section>
-
-      <section class="scene" data-scene="globe">
-        <div class="copy center">
-          <span class="kicker">04 — Reach</span>
-          <h2>Built in India.<br/>Delivered worldwide.</h2>
-          <p>Clients across UAE, Sweden, the US, and India. One team, one timezone-flexible workflow.</p>
-        </div>
-      </section>
-
-      <section class="scene" data-scene="cases" id="cases">
-        <div class="copy left">
-          <span class="kicker">05 — Selected work</span>
+      <!-- Selected work -->
+      <section class="section" id="work">
+        <header class="section-head">
+          <span class="kicker">Selected work</span>
           <h2>Three projects, fewer surprises.</h2>
-          <p>What we've built recently. Click any card for the full story.</p>
-          <div class="trust-row"></div>
-        </div>
+          <p>What we've shipped recently. Each card opens the full story.</p>
+        </header>
         <div class="case-grid"></div>
+        <div class="trust-row"></div>
       </section>
 
-      <section class="scene" data-scene="tiers" id="tiers">
-        <div class="copy center">
-          <span class="kicker">06 — Engagements</span>
+      <!-- Services -->
+      <section class="section" id="services">
+        <header class="section-head">
+          <span class="kicker">Services</span>
+          <h2>Three things, fourteen disciplines.</h2>
+          <p>Every engagement maps to one of three outcomes — <em>build</em> the system, <em>run</em> it reliably, or <em>grow</em> what it reaches.</p>
+        </header>
+        <div class="services-list"></div>
+      </section>
+
+      <!-- How we work -->
+      <section class="section" id="process">
+        <header class="section-head">
+          <span class="kicker">How we work</span>
+          <h2>One pipeline, no theatre.</h2>
+          <p>Weekly demos, transparent estimates, source you own from day one.</p>
+        </header>
+        <div class="process-list"></div>
+      </section>
+
+      <!-- About -->
+      <section class="section" id="about">
+        <header class="section-head">
+          <span class="kicker">Who's behind this</span>
+          <h2>One engineer, sometimes two.</h2>
+        </header>
+        <div class="about-block"></div>
+      </section>
+
+      <!-- Notes -->
+      <section class="section" id="notes">
+        <header class="section-head">
+          <span class="kicker">Notes</span>
+          <h2>What we're thinking about.</h2>
+          <p>Short writeups on what we ship and what it taught us.</p>
+        </header>
+        <div class="notes-grid"></div>
+      </section>
+
+      <!-- Engagement tiers -->
+      <section class="section" id="tiers">
+        <header class="section-head">
+          <span class="kicker">Engagements</span>
           <h2>Three ways to work with us.</h2>
           <p>Pick the shape that fits the question. Always tailored to scope on the call.</p>
-        </div>
+        </header>
         <div class="tiers-grid"></div>
       </section>
 
-      <section class="scene" data-scene="contact" id="contact">
-        <div class="copy center">
-          <span class="kicker">07 — Let's talk</span>
+      <!-- Contact -->
+      <section class="section section-contact" id="contact">
+        <header class="section-head">
+          <span class="kicker">Let's talk</span>
           <h2>Tell us what you're trying to ship.</h2>
           <p>We'll come back within a working day with an honest take on whether we're the right fit.</p>
-          <div class="booking-row">
-            <span class="kicker">Or skip the form</span>
-            <button type="button" class="cta cta-book" data-cal-link="fermion/intro">Book a 30-min call</button>
-          </div>
-          <div class="contact-form-mount"></div>
-          <div class="contact-or">or email us directly:</div>
-          <a class="cta" href="mailto:support@fermionsoftwaresolutions.com">support@fermionsoftwaresolutions.com</a>
-          <div class="footer-row">
-            <span class="footnote">© Fermion Software Solutions</span>
-            <span class="motion-toggle-mount" aria-label="Motion preference"></span>
-          </div>
+        </header>
+        <div class="booking-row">
+          <button type="button" class="cta primary" data-cal-link="fermion/intro">Book a 30-min call</button>
+          <span class="contact-or">or send the details</span>
         </div>
+        <div class="contact-form-mount"></div>
+        <p class="email-fallback">
+          Prefer email? <a href="mailto:support@fermionsoftwaresolutions.com">support@fermionsoftwaresolutions.com</a>
+        </p>
       </section>
+
+      <footer class="site-foot">
+        <span class="footnote">© Fermion Software Solutions</span>
+        <span class="footnote-meta">Built in India · Delivered worldwide</span>
+      </footer>
     </main>
 
     <script type="module" src="/src/main.ts"></script>

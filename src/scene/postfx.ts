@@ -1,18 +1,16 @@
-// Post-processing composer using pmndrs/postprocessing.
-// One merged fullscreen stack: bloom + scroll-driven depth-of-field (gated by quality tier).
+// Post-processing composer: bloom only, gated on quality.
+// Editorial layout doesn't need DOF — there's only the atom in the scene.
 
 import * as THREE from 'three';
 import {
   EffectComposer, RenderPass, EffectPass,
-  BloomEffect, DepthOfFieldEffect,
-  BlendFunction, KernelSize
+  BloomEffect, BlendFunction, KernelSize
 } from 'postprocessing';
 import type { Quality } from './quality';
 
 export interface PostFx {
   composer: EffectComposer;
   setSize: (w: number, h: number) => void;
-  dof: DepthOfFieldEffect | null;
 }
 
 export function createPostFx(
@@ -27,7 +25,7 @@ export function createPostFx(
   if (quality.bloomEnabled) {
     const bloom = new BloomEffect({
       blendFunction: BlendFunction.ADD,
-      intensity: 0.65,
+      intensity: 0.7,
       luminanceThreshold: 0.18,
       luminanceSmoothing: 0.4,
       kernelSize: KernelSize.LARGE
@@ -35,19 +33,5 @@ export function createPostFx(
     composer.addPass(new EffectPass(camera, bloom));
   }
 
-  let dof: DepthOfFieldEffect | null = null;
-  if (quality.dofEnabled) {
-    dof = new DepthOfFieldEffect(camera, {
-      focusDistance: 0.0,
-      focalLength: 0.05,
-      bokehScale: 2.0
-    });
-    composer.addPass(new EffectPass(camera, dof));
-  }
-
-  return {
-    composer,
-    setSize: (w, h) => composer.setSize(w, h),
-    dof
-  };
+  return { composer, setSize: (w, h) => composer.setSize(w, h) };
 }
