@@ -56,54 +56,52 @@ body {
 
 /* ── Hero ───────────────────────────────────────────────────────────────── */
 .hero {
-  position: relative;
-  min-height: clamp(540px, 78vh, 760px);
+  min-height: clamp(560px, 80vh, 780px);
+  padding: 56px var(--pad);
   display: flex;
   align-items: center;
-  padding: 56px var(--pad);
-  overflow: hidden;
 }
-#bg {
-  position: absolute;
-  inset: 0;
+.hero-grid {
   width: 100%;
-  height: 100%;
-  z-index: 0;
-  display: block;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 200px;
-  background: linear-gradient(to bottom, transparent, var(--bg));
-  z-index: 1;
-  pointer-events: none;
-}
-.hero-copy {
-  position: relative;
-  z-index: 2;
-  max-width: 720px;
+  max-width: var(--max);
   margin: 0 auto;
-  text-align: center;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(24px, 4vw, 64px);
+  align-items: center;
 }
+.hero-copy { max-width: 560px; }
 .hero-copy h1 {
   font-family: var(--serif);
   font-weight: 500;
-  font-size: clamp(40px, 6vw, 76px);
+  font-size: clamp(36px, 5.4vw, 68px);
   line-height: 1.05;
   letter-spacing: -0.02em;
   margin: 0 0 20px;
   font-style: italic;
 }
 .hero-copy .lede {
-  font-size: clamp(16px, 1.4vw, 19px);
+  font-size: clamp(16px, 1.3vw, 19px);
   line-height: 1.55;
   color: var(--ink-dim);
-  margin: 0 auto 28px;
-  max-width: 56ch;
+  margin: 0 0 28px;
+  max-width: 52ch;
 }
-.hero-cta { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.hero-cta { display: inline-flex; gap: 12px; flex-wrap: wrap; }
+.hero-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 480px;
+  margin-left: auto;
+}
+#bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
 
 /* ── Section shell ──────────────────────────────────────────────────────── */
 .section {
@@ -641,10 +639,16 @@ dialog.service-detail .meta li { font-size: 13px; color: var(--ink-dim); padding
 }
 
 /* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  .hero-visual { order: -1; max-width: 360px; margin: 0 auto; }
+}
+
 @media (max-width: 720px) {
   .nav nav { gap: 14px; }
   .nav nav a { font-size: 11px; }
   .hero { min-height: 480px; padding: 40px var(--pad); }
+  .hero-visual { max-width: 280px; }
   .process-item { grid-template-columns: 48px 1fr; gap: 16px; }
   .process-num { font-size: 36px; }
   .floating-cta { display: none; }
