@@ -1,23 +1,27 @@
-// About section — name, role, bio, links. Text-only; no photo for now.
+// About section — renders all founders side-by-side. Bios show only when populated.
 
-import { ABOUT } from '../content/about';
+import { FOUNDERS } from '../content/about';
 import { el } from '../lib/dom';
 
 export function mountAbout(root: HTMLElement): void {
-  const body = el('div', { class: 'about-body' });
-  body.appendChild(el('span', { class: 'kicker', text: ABOUT.role }));
-  body.appendChild(el('h3', { text: ABOUT.name }));
-  for (const para of ABOUT.bio) body.appendChild(el('p', { text: para }));
+  for (const f of FOUNDERS) {
+    const card = el('div', { class: 'founder-card' });
+    card.appendChild(el('span', { class: 'kicker', text: f.role }));
+    card.appendChild(el('h3', { text: f.name }));
+    for (const para of f.bio) card.appendChild(el('p', { text: para }));
 
-  const links = el('div', { class: 'about-links' });
-  for (const l of ABOUT.links) {
-    links.appendChild(el('a', {
-      class: 'about-link',
-      text: l.label,
-      attrs: { href: l.href, rel: 'noopener noreferrer' }
-    }));
+    if (f.links.length > 0) {
+      const links = el('div', { class: 'about-links' });
+      for (const l of f.links) {
+        links.appendChild(el('a', {
+          class: 'about-link',
+          text: l.label,
+          attrs: { href: l.href, rel: 'noopener noreferrer' }
+        }));
+      }
+      card.appendChild(links);
+    }
+
+    root.appendChild(card);
   }
-  body.appendChild(links);
-
-  root.appendChild(body);
 }
