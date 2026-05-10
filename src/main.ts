@@ -22,6 +22,7 @@ import { mountTiers } from './ui/tiers';
 import { mountForm } from './ui/form';
 import { attachCalLinks } from './ui/booking';
 import { initAnalytics } from './lib/analytics';
+import { organizationJsonLd } from './lib/seo';
 import { buildTimeline } from './timeline';
 import { initLenis } from './lib/lenis';
 import { PROCESS } from './content/process';
@@ -83,6 +84,9 @@ if (formRoot) mountForm(formRoot, { endpoint: '/api/contact' });
 
 attachCalLinks();
 initAnalytics();
+
+const orgScript = document.getElementById('org-ld');
+if (orgScript) orgScript.textContent = JSON.stringify(organizationJsonLd());
 
 const stepDetail = mountStepDetail();
 const stepsRoot = document.querySelector<HTMLElement>('.process-steps');
