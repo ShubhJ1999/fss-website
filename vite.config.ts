@@ -14,7 +14,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        caseSwedteknik: resolve(__dirname, 'pages/case-swedteknik.html'),
+        caseOne: resolve(__dirname, 'pages/case-one.html'),
         caseTwo: resolve(__dirname, 'pages/case-two.html'),
         caseThree: resolve(__dirname, 'pages/case-three.html'),
         notFound: resolve(__dirname, '404.html')

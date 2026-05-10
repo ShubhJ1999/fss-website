@@ -1,7 +1,7 @@
 {
   "ci": {
     "collect": {
-      "url": ["http://localhost:4173/", "http://localhost:4173/pages/case-swedteknik.html"],
+      "url": ["http://localhost:4173/", "http://localhost:4173/pages/case-one.html"],
       "startServerCommand": "npm run preview -- --port 4173",
       "numberOfRuns": 1
     },

@@ -1,5 +1,4 @@
-// Client testimonials. Single placeholder for v1 — Shubh swaps in a real quote
-// before launch.
+// Client testimonials. Empty for now — real quote drops in before launch.
 
 export interface Testimonial {
   quote: string;
@@ -7,10 +6,4 @@ export interface Testimonial {
   role: string;
 }
 
-export const TESTIMONIALS: Testimonial[] = [
-  {
-    quote: 'PLACEHOLDER — pull a real quote from Shubh\'s SwedTeknik partner or another client before launch.',
-    author: 'PLACEHOLDER',
-    role: 'PLACEHOLDER'
-  }
-];
+export const TESTIMONIALS: Testimonial[] = [];

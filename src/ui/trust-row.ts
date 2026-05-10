@@ -1,15 +1,15 @@
-// Trust stat row + one testimonial pull. No client logos in v1 per spec decision.
-// Stats render as a 4-cell strip; quote follows below in the same container.
+// Trust stat row + testimonial pull. Stats and quote are placeholders;
+// Shubh + Dhruv fill in real numbers and a real client quote before launch.
 
 import { TESTIMONIALS } from '../content/testimonials';
 import { el } from '../lib/dom';
 
 interface Stat { value: string; label: string; }
 const STATS: Stat[] = [
-  { value: '30+', label: 'Deliveries' },
-  { value: '4',   label: 'Countries' },
-  { value: '0',   label: 'Vendor lock-in' },
-  { value: '~95%', label: 'Repeat / referral' }
+  { value: '—', label: 'Placeholder' },
+  { value: '—', label: 'Placeholder' },
+  { value: '—', label: 'Placeholder' },
+  { value: '—', label: 'Placeholder' }
 ];
 
 export function mountTrustRow(root: HTMLElement): void {

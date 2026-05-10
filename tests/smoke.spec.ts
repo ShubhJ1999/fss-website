@@ -15,6 +15,6 @@ test('index loads, scrolls, form errors on bad input', async ({ page }) => {
 });
 
 test('case study page loads', async ({ page }) => {
-  await page.goto('/pages/case-swedteknik.html');
-  await expect(page.locator('h1')).toContainText('SwedTeknik');
+  await page.goto('/pages/case-one.html');
+  await expect(page.locator('h1')).toBeVisible();
 });
