@@ -1,5 +1,6 @@
-// Case studies. All placeholder content for now — Shubh + Dhruv fill in
-// real client names, taglines, problems, approaches, and result metrics.
+// Case studies — three featured projects from the Fermion portfolio.
+// Names, slugs, and taglines reflect real projects. Problem/approach/result
+// bodies are placeholders until Shubh + Dhruv add the full write-ups.
 
 export interface CaseStudy {
   slug: string;
@@ -13,28 +14,28 @@ export interface CaseStudy {
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
-    slug: 'case-one',
-    client: 'PLACEHOLDER',
-    tagline: 'PLACEHOLDER tagline — confirm before launch.',
-    cover: '/cases/case-one-cover.png',
+    slug: 'ca-dms',
+    client: 'CA-DMS',
+    tagline: 'Document management for chartered accountants.',
+    cover: '/cases/ca-dms-cover.png',
     problem: 'PLACEHOLDER — confirm before launch.',
     approach: [],
     result: []
   },
   {
-    slug: 'case-two',
-    client: 'PLACEHOLDER',
-    tagline: 'PLACEHOLDER tagline — confirm before launch.',
-    cover: '/cases/case-two-cover.png',
+    slug: 'docgpt',
+    client: 'DocGPT',
+    tagline: 'AI document intelligence for fast retrieval and answers.',
+    cover: '/cases/docgpt-cover.png',
     problem: 'PLACEHOLDER — confirm before launch.',
     approach: [],
     result: []
   },
   {
-    slug: 'case-three',
-    client: 'PLACEHOLDER',
-    tagline: 'PLACEHOLDER tagline — confirm before launch.',
-    cover: '/cases/case-three-cover.png',
+    slug: 'apneedukan',
+    client: 'Apne Dukan',
+    tagline: 'E-commerce SaaS for independent retailers.',
+    cover: '/cases/apneedukan-cover.png',
     problem: 'PLACEHOLDER — confirm before launch.',
     approach: [],
     result: []

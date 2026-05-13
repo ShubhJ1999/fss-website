@@ -22,7 +22,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
   const p = body as Payload;
 
-  const sendEmail = (to: string, subject: string, html: string) =>
+  const sendEmail = (to: string | string[], subject: string, html: string) =>
     fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -35,7 +35,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       })
     });
 
-  const notif = sendEmail(env.CONTACT_TO_EMAIL,
+  const recipients = env.CONTACT_TO_EMAIL.split(',').map((s) => s.trim()).filter(Boolean);
+  const notif = sendEmail(recipients,
     `New lead: ${p.name}`,
     `<p><strong>${p.name}</strong> (${p.email})</p>
      <p><strong>Project:</strong></p><p>${escapeHtml(p.project)}</p>

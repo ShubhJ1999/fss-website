@@ -418,6 +418,8 @@ em {
   background: rgba(46, 200, 255, 0.05);
   transform: translateY(-2px);
 }
+.note-card-static { cursor: default; }
+.note-card-static:hover { transform: none; border-color: var(--rule); background: rgba(255, 255, 255, 0.02); }
 .note-card .note-meta {
   display: block;
   font-size: 11px;

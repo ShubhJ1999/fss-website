@@ -15,6 +15,6 @@ test('index loads, scrolls, form errors on bad input', async ({ page }) => {
 });
 
 test('case study page loads', async ({ page }) => {
-  await page.goto('/pages/case-one.html');
+  await page.goto('/pages/ca-dms.html');
   await expect(page.locator('h1')).toBeVisible();
 });

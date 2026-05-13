@@ -1,5 +1,5 @@
-// Trust stat row + testimonial pull. Stats and quote are placeholders;
-// Shubh + Dhruv fill in real numbers and a real client quote before launch.
+// Trust stat row + testimonial pull. Hides itself entirely while STATS and
+// TESTIMONIALS are placeholders. Edit STATS below + TESTIMONIALS to surface it.
 
 import { TESTIMONIALS } from '../content/testimonials';
 import { el } from '../lib/dom';
@@ -13,14 +13,23 @@ const STATS: Stat[] = [
 ];
 
 export function mountTrustRow(root: HTMLElement): void {
-  const stats = el('div', { class: 'trust-stats' });
-  for (const s of STATS) {
-    const cell = el('div', {});
-    cell.appendChild(el('strong', { text: s.value }));
-    cell.appendChild(el('span', { text: s.label }));
-    stats.appendChild(cell);
+  const hasRealStat = STATS.some((s) => s.value !== '—' && !/placeholder/i.test(s.label));
+  const hasTestimonial = TESTIMONIALS.length > 0;
+  if (!hasRealStat && !hasTestimonial) {
+    root.remove();
+    return;
   }
-  root.appendChild(stats);
+
+  if (hasRealStat) {
+    const stats = el('div', { class: 'trust-stats' });
+    for (const s of STATS) {
+      const cell = el('div', {});
+      cell.appendChild(el('strong', { text: s.value }));
+      cell.appendChild(el('span', { text: s.label }));
+      stats.appendChild(cell);
+    }
+    root.appendChild(stats);
+  }
 
   const t = TESTIMONIALS[0];
   if (t) {

@@ -16,9 +16,9 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        caseOne: resolve(__dirname, 'pages/case-one.html'),
-        caseTwo: resolve(__dirname, 'pages/case-two.html'),
-        caseThree: resolve(__dirname, 'pages/case-three.html'),
+        caDms: resolve(__dirname, 'pages/ca-dms.html'),
+        docgpt: resolve(__dirname, 'pages/docgpt.html'),
+        apneedukan: resolve(__dirname, 'pages/apneedukan.html'),
         notFound: resolve(__dirname, '404.html')
       }
     }
