@@ -10,10 +10,12 @@ html, body { margin: 0; background: var(--bg); color: var(--ink); }
 
 .case-nav { padding: 22px clamp(20px, 4vw, 56px); }
 .case-nav .brand {
+  display: inline-flex; align-items: center;
   color: var(--ink); text-decoration: none;
-  font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; font-size: 13px;
+  line-height: 0;
 }
-.case-nav .brand:hover { color: var(--cyan); }
+.case-nav .brand-img { display: block; height: 36px; width: auto; }
+.case-nav .brand:hover .brand-img { opacity: 0.85; }
 
 main.case {
   padding: 32px clamp(20px, 4vw, 56px) 96px;

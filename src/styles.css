@@ -38,12 +38,11 @@ body {
   border-bottom: 1px solid var(--rule);
 }
 .brand {
-  display: flex; align-items: center; gap: 12px;
+  display: flex; align-items: center;
   text-decoration: none; color: var(--ink);
-  font-weight: 700; letter-spacing: 0.18em;
-  text-transform: uppercase; font-size: 13px;
+  line-height: 0;
 }
-.brand-mark { width: 24px; height: 24px; display: block; }
+.brand-img { display: block; height: 44px; width: auto; }
 .nav nav { display: flex; gap: 24px; }
 .nav nav a {
   color: var(--ink-dim);
