@@ -38,11 +38,22 @@ body {
   border-bottom: 1px solid var(--rule);
 }
 .brand {
-  display: flex; align-items: center;
+  display: inline-flex; align-items: center; gap: 10px;
   text-decoration: none; color: var(--ink);
-  line-height: 0;
 }
-.brand-img { display: block; height: 44px; width: auto; }
+.brand-img { display: block; height: 36px; width: 36px; object-fit: contain; }
+.brand-name {
+  font-weight: 700; font-size: 14px; letter-spacing: 0.04em;
+  color: var(--ink); white-space: nowrap; line-height: 1;
+}
+.brand-name em {
+  font-style: normal; font-weight: 500;
+  color: var(--ink-dim); letter-spacing: 0.06em;
+  border-bottom: none;
+}
+@media (max-width: 720px) {
+  .brand-name em { display: none; }
+}
 .nav nav { display: flex; gap: 24px; }
 .nav nav a {
   color: var(--ink-dim);
