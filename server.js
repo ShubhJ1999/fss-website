@@ -4,20 +4,12 @@
 import express from 'express';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { validatePayload } from './validate.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT) || 3000;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL ?? '';
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-function validatePayload(p) {
-  if (!p?.name || !p.name.trim()) return { ok: false, reason: 'name' };
-  if (!p?.email || !EMAIL_RE.test(p.email)) return { ok: false, reason: 'email' };
-  if (!p?.project || p.project.trim().length < 5) return { ok: false, reason: 'project' };
-  return { ok: true };
-}
 
 function escapeHtml(s) {
   const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };

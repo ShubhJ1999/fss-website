@@ -1,8 +1,9 @@
-// Tests for functions/api/contact.ts validatePayload.
-// Pure validation logic — no Worker runtime, no Resend.
+// Tests for the contact-form payload validation used by server.js.
+// Pure logic — no HTTP, no Resend.
 
 import { describe, it, expect } from 'vitest';
-import { validatePayload } from '../functions/_lib/validate';
+// @ts-expect-error — plain JS, no .d.ts shipped
+import { validatePayload } from '../validate.js';
 
 describe('contact function validation', () => {
   it('rejects missing fields', () => {
