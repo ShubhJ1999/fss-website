@@ -8,6 +8,7 @@
     "prebuild": "tsx scripts/build-sitemap.ts",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
+    "start": "node server.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
@@ -29,6 +30,7 @@
   },
   "dependencies": {
     "@types/three": "^0.169.0",
+    "express": "^4.21.0",
     "gsap": "^3.12.5",
     "postprocessing": "^6.39.1",
     "three": "^0.169.0"
