@@ -7,16 +7,16 @@ import { DHRUV } from './content/dhruv-card';
 const VCARD = [
   'BEGIN:VCARD',
   'VERSION:3.0',
-  `FN:${DHRUV.name}`,
   `N:${DHRUV.lastName};${DHRUV.firstName};;;`,
-  `TITLE:${DHRUV.primaryRole.title}`,
+  `FN:${DHRUV.name}`,
   `ORG:${DHRUV.primaryRole.org}`,
-  `EMAIL;TYPE=WORK:${DHRUV.email}`,
-  `TEL;TYPE=CELL,VOICE:${DHRUV.phoneRaw}`,
-  'URL;TYPE=LinkedIn:https://www.linkedin.com/in/the-dkpatel/',
-  'URL;TYPE=Site:https://thedkpatel.com',
-  'URL;TYPE=Fermion:https://fermionsoftwaresolutions.com',
+  `TITLE:${DHRUV.primaryRole.title}`,
+  `TEL;TYPE=CELL;TYPE=PREF:${DHRUV.phoneRaw}`,
+  `EMAIL;TYPE=WORK;TYPE=PREF:${DHRUV.email}`,
   'ADR;TYPE=WORK:;;;Ahmedabad;Gujarat;;India',
+  'URL:https://www.linkedin.com/in/the-dkpatel/',
+  'URL:https://thedkpatel.com',
+  'URL:https://fermionsoftwaresolutions.com',
   `NOTE:${DHRUV.bio}`,
   'END:VCARD'
 ].join('\r\n');
