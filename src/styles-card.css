@@ -74,11 +74,18 @@ html, body {
   margin: 0 0 18px;
 }
 
-.vcard-tag {
-  font-size: 14px; line-height: 1.55;
+.vcard-bio {
+  font-size: 14px; line-height: 1.6;
   color: var(--ink);
-  margin: 0 0 14px;
-  max-width: 36ch;
+  margin: 0 0 12px;
+  max-width: 38ch;
+}
+
+.vcard-tag {
+  font-size: 12px; letter-spacing: 0.04em;
+  color: var(--ink-dim);
+  margin: 0 0 16px;
+  max-width: 38ch;
 }
 
 .vcard-loc {

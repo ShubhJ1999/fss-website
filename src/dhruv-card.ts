@@ -12,11 +12,12 @@ const VCARD = [
   `TITLE:${DHRUV.primaryRole.title}`,
   `ORG:${DHRUV.primaryRole.org}`,
   `EMAIL;TYPE=WORK:${DHRUV.email}`,
+  `TEL;TYPE=CELL,VOICE:${DHRUV.phoneRaw}`,
   'URL;TYPE=LinkedIn:https://www.linkedin.com/in/the-dkpatel/',
   'URL;TYPE=Site:https://thedkpatel.com',
   'URL;TYPE=Fermion:https://fermionsoftwaresolutions.com',
   'ADR;TYPE=WORK:;;;Ahmedabad;Gujarat;;India',
-  `NOTE:${DHRUV.tag}`,
+  `NOTE:${DHRUV.bio}`,
   'END:VCARD'
 ].join('\r\n');
 
