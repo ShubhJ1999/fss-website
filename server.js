@@ -72,6 +72,11 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
+// Clean URL for Dhruv's digital visiting card → /dhruv resolves to dhruv.html.
+app.get('/dhruv', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'dhruv.html'));
+});
+
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use((_req, res) => {

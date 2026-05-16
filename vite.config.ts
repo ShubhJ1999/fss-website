@@ -19,6 +19,7 @@ export default defineConfig({
         caDms: resolve(__dirname, 'pages/ca-dms.html'),
         docgpt: resolve(__dirname, 'pages/docgpt.html'),
         apneedukan: resolve(__dirname, 'pages/apneedukan.html'),
+        dhruv: resolve(__dirname, 'dhruv.html'),
         notFound: resolve(__dirname, '404.html')
       }
     }

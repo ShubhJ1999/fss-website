@@ -13,6 +13,7 @@ const today = new Date().toISOString().slice(0, 10);
 
 const urls = [
   { loc: `${SITE}/`, priority: '1.0' },
+  { loc: `${SITE}/dhruv`, priority: '0.6' },
   ...CASE_STUDIES.map((c) => ({ loc: `${SITE}/pages/${c.slug}.html`, priority: '0.7' }))
 ];
 
